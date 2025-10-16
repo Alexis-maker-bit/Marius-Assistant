@@ -5,6 +5,7 @@ Description: Chatbot expert avec analyse d'images, responsivité complète et ge
 Version: 7.18
 Author: Urooj Shafait (Optimisé par Gemini + Claude)
 Company: LoomVision
+GitHub Plugin URI: Alexis-maker-bit/Marius-Assistant
 License: GPL2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: loom-chatbot
