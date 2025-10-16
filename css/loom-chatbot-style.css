@@ -1,0 +1,935 @@
+/*
+ * Loom Chatbot - Ultra Responsive Styles v7.18
+ * Optimized for all devices: Mobile, Tablet, Desktop
+ * Features: Touch-friendly, virtual keyboard support, safe areas for notched devices
+ */
+
+/* ===========================
+   BASE STYLES & RESET
+   =========================== */
+
+* {
+    box-sizing: border-box;
+}
+
+/* Performance optimization for mobile */
+.loom-chatbot-container,
+.loom-chatbot-header,
+.minimize-button,
+.product-card,
+#loom-chatbot-send,
+#loom-chatbot-photo-btn {
+    will-change: transform;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+/* ===========================
+   CHATBOT CONTAINER
+   =========================== */
+
+.loom-chatbot-container {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    border-radius: 16px;
+    z-index: 999999;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    
+    /* Safe area support for notched devices (iPhone X+) */
+    padding-bottom: env(safe-area-inset-bottom);
+    
+    /* Default desktop positioning */
+    bottom: 20px;
+    right: 20px;
+    width: 400px;
+    max-width: 100%;
+    height: 600px;
+    max-height: calc(100vh - 40px);
+}
+
+/* Minimized state */
+.loom-chatbot-container.minimized {
+    height: 70px;
+    overflow: hidden;
+}
+
+.loom-chatbot-container.minimized .loom-chatbot-body,
+.loom-chatbot-container.minimized .loom-chatbot-footer {
+    display: none;
+}
+
+/* ===========================
+   HEADER
+   =========================== */
+
+.loom-chatbot-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #ffffff;
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    min-height: 70px;
+}
+
+.icon-container {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.header-details {
+    flex: 1;
+    min-width: 0;
+}
+
+.header-title {
+    display: block;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.online-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    opacity: 0.95;
+}
+
+.status-icon {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #4ade80;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.minimize-button {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    font-size: 24px;
+    cursor: pointer;
+    transition: background 0.2s;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.minimize-button:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.minimize-button:active {
+    transform: scale(0.95);
+}
+
+/* ===========================
+   BODY / MESSAGES AREA
+   =========================== */
+
+.loom-chatbot-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: #f8f9fa;
+}
+
+.loom-chatbot-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Scrollbar styles */
+.loom-chatbot-messages::-webkit-scrollbar {
+    width: 6px;
+}
+
+.loom-chatbot-messages::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.loom-chatbot-messages::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+}
+
+.loom-chatbot-messages::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+/* Message groups */
+.bot-message-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Bot messages */
+.bot-message {
+    background: #ffffff;
+    padding: 12px 16px;
+    border-radius: 12px 12px 12px 4px;
+    max-width: 85%;
+    align-self: flex-start;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    line-height: 1.5;
+    font-size: 15px;
+    color: #1f2937;
+    /* Prevent long URLs from breaking layout */
+    overflow-wrap: anywhere;
+    hyphens: auto;
+}
+
+.bot-message p {
+    margin: 0 0 8px 0;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.bot-message p:last-child {
+    margin-bottom: 0;
+}
+
+.bot-message strong {
+    font-weight: 600;
+    color: #111827;
+}
+
+.bot-message ul,
+.bot-message ol {
+    margin: 8px 0;
+    padding-left: 20px;
+}
+
+.bot-message li {
+    margin: 4px 0;
+}
+
+.bot-message a {
+    color: #667eea;
+    text-decoration: underline;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.bot-message code {
+    background: #f3f4f6;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+}
+
+/* User messages */
+.user-message {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #ffffff;
+    padding: 12px 16px;
+    border-radius: 12px 12px 4px 12px;
+    max-width: 85%;
+    align-self: flex-end;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.5;
+    font-size: 15px;
+}
+
+/* Product cards */
+.bot-message-product {
+    max-width: 100%;
+    align-self: flex-start;
+}
+
+.product-card {
+    background: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.product-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.product-card-link-wrapper {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+.product-card-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+}
+
+.product-card-info {
+    padding: 12px 16px;
+}
+
+.product-card-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+    color: #1f2937;
+}
+
+.product-card-price {
+    font-size: 18px;
+    font-weight: 700;
+    color: #667eea;
+    margin-bottom: 12px;
+}
+
+.product-card-actions {
+    padding: 0 16px 16px 16px;
+}
+
+.product-card-button {
+    display: block;
+    width: 100%;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.product-card-button.primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #ffffff;
+}
+
+.product-card-button.primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+}
+
+.product-card-button.primary:active {
+    transform: translateY(0);
+}
+
+/* Images in messages */
+.bot-message-photo {
+    max-width: 100%;
+    align-self: flex-start;
+}
+
+.chatbot-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* ===========================
+   LOADING INDICATOR
+   =========================== */
+
+.loom-chatbot-loading {
+    display: none;
+    padding: 12px 16px;
+}
+
+.loom-chatbot-loading.active {
+    display: block;
+}
+
+.typing-indicator {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #ffffff;
+    padding: 12px 16px;
+    border-radius: 12px 12px 12px 4px;
+    max-width: 85%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.typing-avatar {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: rgba(102, 126, 234, 0.1);
+}
+
+.typing-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.typing-content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.typing-text {
+    font-size: 14px;
+    color: #6b7280;
+}
+
+.typing-dots {
+    display: flex;
+    gap: 4px;
+}
+
+.typing-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #667eea;
+    animation: typing 1.4s ease-in-out infinite;
+}
+
+.typing-dot:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.typing-dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.typing-dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes typing {
+    0%, 60%, 100% {
+        transform: translateY(0);
+        opacity: 0.7;
+    }
+    30% {
+        transform: translateY(-10px);
+        opacity: 1;
+    }
+}
+
+/* ===========================
+   FOOTER / INPUT AREA
+   =========================== */
+
+.loom-chatbot-footer {
+    padding: 16px;
+    background: #ffffff;
+    border-top: 1px solid #e5e7eb;
+}
+
+.footer-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #f3f4f6;
+    border-radius: 24px;
+    padding: 4px 4px 4px 16px;
+    transition: background 0.2s;
+}
+
+.footer-input-wrapper:focus-within {
+    background: #e5e7eb;
+}
+
+#loom-chatbot-input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 8px 0;
+    font-size: 15px;
+    color: #1f2937;
+    outline: none;
+    font-family: inherit;
+}
+
+#loom-chatbot-input::placeholder {
+    color: #9ca3af;
+}
+
+#loom-chatbot-photo-btn,
+#loom-chatbot-send {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    transition: all 0.2s;
+    -webkit-tap-highlight-color: transparent;
+}
+
+#loom-chatbot-photo-btn:hover,
+#loom-chatbot-send:hover {
+    background: rgba(102, 126, 234, 0.1);
+}
+
+#loom-chatbot-photo-btn:active,
+#loom-chatbot-send:active {
+    transform: scale(0.9);
+}
+
+#loom-chatbot-send {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+#loom-chatbot-send:hover {
+    background: linear-gradient(135deg, #5568d3 0%, #653a8b 100%);
+}
+
+.send-icon {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+}
+
+/* ===========================
+   MOBILE RESPONSIVE (< 768px)
+   =========================== */
+
+@media screen and (max-width: 767px) {
+    .loom-chatbot-container {
+        /* Full screen on mobile */
+        bottom: 0;
+        right: 0;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        max-height: 100vh;
+        border-radius: 0;
+        
+        /* Adjust for safe areas on notched devices */
+        height: calc(100vh - env(safe-area-inset-top));
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+    
+    /* Special handling when virtual keyboard is open */
+    .loom-chatbot-container.keyboard-open {
+        /* Use fixed positioning to prevent resize issues */
+        position: fixed;
+        height: 100%;
+    }
+    
+    .loom-chatbot-container.keyboard-open .loom-chatbot-body {
+        /* Reduce height when keyboard is visible */
+        flex: 1;
+        min-height: 0;
+    }
+    
+    .loom-chatbot-container.keyboard-open .loom-chatbot-messages {
+        /* Ensure messages remain scrollable with keyboard open */
+        max-height: 40vh;
+        overflow-y: auto;
+    }
+    
+    .loom-chatbot-container.minimized {
+        /* When minimized on mobile, show as floating button */
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        bottom: 20px;
+        right: 20px;
+        left: auto;
+        top: auto;
+        padding: 0;
+    }
+    
+    .loom-chatbot-container.minimized .loom-chatbot-header {
+        padding: 0;
+        justify-content: center;
+        border-radius: 50%;
+        min-height: 60px;
+    }
+    
+    .loom-chatbot-container.minimized .icon-container {
+        margin: 0;
+    }
+    
+    .loom-chatbot-container.minimized .header-details,
+    .loom-chatbot-container.minimized .minimize-button {
+        display: none;
+    }
+    
+    /* Adjust messages for mobile */
+    .loom-chatbot-messages {
+        padding: 16px 12px;
+        /* Account for virtual keyboard */
+        padding-bottom: calc(16px + env(safe-area-inset-bottom));
+    }
+    
+    .bot-message,
+    .user-message {
+        max-width: 90%;
+        font-size: 14px;
+    }
+    
+    .product-card-image {
+        height: 180px;
+    }
+    
+    /* Footer adjustments for mobile */
+    .loom-chatbot-footer {
+        padding: 12px;
+        padding-bottom: calc(12px + env(safe-area-inset-bottom));
+    }
+    
+    #loom-chatbot-input {
+        font-size: 16px; /* Prevents zoom on iOS */
+    }
+    
+    /* Larger touch targets on mobile */
+    #loom-chatbot-photo-btn,
+    #loom-chatbot-send {
+        width: 44px;
+        height: 44px;
+        min-width: 44px;
+        min-height: 44px;
+    }
+}
+
+/* ===========================
+   TABLET PORTRAIT (768px - 1024px)
+   =========================== */
+
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+    .loom-chatbot-container {
+        width: 420px;
+        height: 650px;
+        bottom: 20px;
+        right: 20px;
+    }
+}
+
+/* ===========================
+   TABLET LANDSCAPE (1025px - 1366px)
+   =========================== */
+
+@media screen and (min-width: 1025px) and (max-width: 1366px) {
+    .loom-chatbot-container {
+        width: 440px;
+        height: 680px;
+    }
+}
+
+/* ===========================
+   LARGE DESKTOP (> 1366px)
+   =========================== */
+
+@media screen and (min-width: 1367px) {
+    .loom-chatbot-container {
+        width: 460px;
+        height: 700px;
+    }
+}
+
+/* ===========================
+   ORIENTATION SPECIFIC STYLES
+   =========================== */
+
+@media screen and (max-width: 767px) and (orientation: landscape) {
+    .loom-chatbot-container:not(.minimized) {
+        /* Adjust for landscape on mobile */
+        max-height: 100vh;
+    }
+    
+    .loom-chatbot-header {
+        min-height: 60px;
+        padding: 12px 16px;
+    }
+    
+    .icon-container {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .header-title {
+        font-size: 15px;
+    }
+}
+
+/* ===========================
+   HIGH DPI / RETINA DISPLAYS
+   =========================== */
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .product-card-image,
+    .chatbot-image {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+}
+
+/* ===========================
+   TOUCH DEVICE OPTIMIZATIONS
+   =========================== */
+
+@media (hover: none) and (pointer: coarse) {
+    /* Remove hover effects on touch devices */
+    .minimize-button:hover,
+    #loom-chatbot-photo-btn:hover,
+    #loom-chatbot-send:hover,
+    .product-card-button.primary:hover {
+        transform: none;
+    }
+    
+    /* Add touch feedback */
+    .minimize-button:active,
+    #loom-chatbot-photo-btn:active,
+    #loom-chatbot-send:active,
+    .product-card-button.primary:active {
+        opacity: 0.7;
+    }
+    
+    /* Increase touch targets */
+    .minimize-button,
+    #loom-chatbot-photo-btn,
+    #loom-chatbot-send {
+        min-width: 44px;
+        min-height: 44px;
+    }
+}
+
+/* ===========================
+   REDUCED MOTION
+   =========================== */
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ===========================
+   DARK MODE SUPPORT
+   =========================== */
+
+@media (prefers-color-scheme: dark) {
+    .loom-chatbot-container {
+        background: #1f2937;
+    }
+    
+    .loom-chatbot-body {
+        background: #111827;
+    }
+    
+    .bot-message {
+        background: #374151;
+        color: #f9fafb;
+    }
+    
+    .bot-message strong {
+        color: #ffffff;
+    }
+    
+    .product-card {
+        background: #374151;
+    }
+    
+    .product-card-title {
+        color: #f9fafb;
+    }
+    
+    .loom-chatbot-footer {
+        background: #1f2937;
+        border-top-color: #374151;
+    }
+    
+    .footer-input-wrapper {
+        background: #374151;
+    }
+    
+    .footer-input-wrapper:focus-within {
+        background: #4b5563;
+    }
+    
+    #loom-chatbot-input {
+        color: #f9fafb;
+    }
+    
+    #loom-chatbot-input::placeholder {
+        color: #9ca3af;
+    }
+    
+    .typing-indicator {
+        background: #374151;
+    }
+}
+
+/* ===========================
+   ACCESSIBILITY IMPROVEMENTS
+   =========================== */
+
+/* Focus visible for keyboard navigation */
+*:focus-visible {
+    outline: 2px solid #667eea;
+    outline-offset: 2px;
+}
+
+/* Screen reader only content */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+/* Skip links for accessibility */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: #667eea;
+    color: white;
+    padding: 8px;
+    text-decoration: none;
+    z-index: 100;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
+/* High contrast mode improvements */
+@media (prefers-contrast: high) {
+    .loom-chatbot-container {
+        border: 2px solid currentColor;
+    }
+    
+    .bot-message,
+    .user-message {
+        border: 1px solid currentColor;
+    }
+    
+    .product-card-button.primary {
+        border: 2px solid currentColor;
+    }
+}
+
+/* ===========================
+   PRINT STYLES
+   =========================== */
+
+@media print {
+    .loom-chatbot-container {
+        display: none;
+    }
+}
+
+/* ===========================
+   NO JAVASCRIPT FALLBACK
+   =========================== */
+
+.no-js .loom-chatbot-container {
+    display: none;
+}
+
+.no-js .chatbot-fallback {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #667eea;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 8px;
+    max-width: 300px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 999999;
+}
+
+/* ===========================
+   LOADING STATES
+   =========================== */
+
+.loom-chatbot-container.loading {
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+/* Skeleton loading for messages */
+.skeleton-message {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s ease-in-out infinite;
+    border-radius: 8px;
+    height: 60px;
+    margin-bottom: 12px;
+}
+
+@keyframes skeleton-loading {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
