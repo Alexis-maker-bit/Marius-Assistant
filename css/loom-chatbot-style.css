@@ -531,6 +531,25 @@
         padding-bottom: env(safe-area-inset-bottom);
     }
     
+    /* Special handling when virtual keyboard is open */
+    .loom-chatbot-container.keyboard-open {
+        /* Use fixed positioning to prevent resize issues */
+        position: fixed;
+        height: 100%;
+    }
+    
+    .loom-chatbot-container.keyboard-open .loom-chatbot-body {
+        /* Reduce height when keyboard is visible */
+        flex: 1;
+        min-height: 0;
+    }
+    
+    .loom-chatbot-container.keyboard-open .loom-chatbot-messages {
+        /* Ensure messages remain scrollable with keyboard open */
+        max-height: 40vh;
+        overflow-y: auto;
+    }
+    
     .loom-chatbot-container.minimized {
         /* When minimized on mobile, show as floating button */
         width: 60px;

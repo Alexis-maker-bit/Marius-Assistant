@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>Loom Chatbot - Test de responsivité</title>
+    <link rel="stylesheet" href="css/loom-chatbot-style.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .test-info {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .test-info h1 {
+            margin: 0 0 10px 0;
+            color: #1f2937;
+        }
+        .test-info p {
+            margin: 5px 0;
+            color: #6b7280;
+        }
+        .device-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .device-info-item {
+            background: #f3f4f6;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        .device-info-item strong {
+            display: block;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-info">
+        <h1>🧪 Test de responsivité - Loom Chatbot v7.18</h1>
+        <p>Cette page permet de tester le chatbot sur différents appareils et résolutions.</p>
+        <div class="device-info">
+            <div class="device-info-item">
+                <strong>Largeur viewport:</strong>
+                <span id="viewport-width">-</span>px
+            </div>
+            <div class="device-info-item">
+                <strong>Hauteur viewport:</strong>
+                <span id="viewport-height">-</span>px
+            </div>
+            <div class="device-info-item">
+                <strong>Type d'appareil:</strong>
+                <span id="device-type">-</span>
+            </div>
+            <div class="device-info-item">
+                <strong>Orientation:</strong>
+                <span id="orientation">-</span>
+            </div>
+            <div class="device-info-item">
+                <strong>Tactile:</strong>
+                <span id="touch-support">-</span>
+            </div>
+            <div class="device-info-item">
+                <strong>Pixel ratio:</strong>
+                <span id="pixel-ratio">-</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chatbot Widget -->
+    <div class="loom-chatbot-container minimized">
+        <div class="loom-chatbot-header">
+            <div class="icon-container">
+                <img src="images/taupier-quicktaupe-assistant-ia.png" alt="Marius">
+            </div>
+            <div class="header-details">
+                <span class="header-title">Marius, Assistant taupier</span>
+                <div class="online-status">
+                    <div class="status-icon"></div>
+                    <span>En ligne</span>
+                </div>
+            </div>
+            <div class="minimize-button">&#x2212;</div>
+        </div>
+        <div class="loom-chatbot-body">
+            <div class="loom-chatbot-messages" aria-live="polite">
+                <div class="bot-message">
+                    <p>Bonjour ! Je suis Marius, votre expert taupier. Comment puis-je vous aider ?</p>
+                </div>
+                <div class="user-message">
+                    Bonjour, j'ai des taupes dans mon jardin
+                </div>
+                <div class="bot-message-group">
+                    <div class="bot-message">
+                        <p><strong>Pas de panique !</strong> Je vais vous aider à résoudre ce problème.</p>
+                        <p>Voici quelques solutions efficaces :</p>
+                        <ul>
+                            <li>Utiliser des répulsifs naturels</li>
+                            <li>Installer des pièges mécaniques</li>
+                            <li>Faire appel à un professionnel</li>
+                        </ul>
+                    </div>
+                    <div class="bot-message-product">
+                        <div class="product-card">
+                            <a href="#" class="product-card-link-wrapper">
+                                <img src="https://via.placeholder.com/400x200/667eea/ffffff?text=Piège+à+Taupes" alt="Piège à taupes" class="product-card-image">
+                                <div class="product-card-info">
+                                    <h3 class="product-card-title">Piège à taupes professionnel</h3>
+                                    <div class="product-card-price">29,99 €</div>
+                                </div>
+                            </a>
+                            <div class="product-card-actions">
+                                <button type="button" class="product-card-button primary">Ajouter au panier</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="loom-chatbot-loading">
+                <div class="typing-indicator">
+                    <div class="typing-avatar">
+                        <img src="images/taupier-quicktaupe-assistant-ia.png" alt="Marius">
+                    </div>
+                    <div class="typing-content">
+                        <span class="typing-text">Marius analyse</span>
+                        <div class="typing-dots">
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="loom-chatbot-footer">
+            <div class="footer-input-wrapper">
+                <input id="loom-chatbot-input" type="text" placeholder="Posez votre question..." maxlength="500">
+                <button id="loom-chatbot-photo-btn" type="button" title="Envoyer une photo">📷</button>
+                <button id="loom-chatbot-send" title="Envoyer">
+                    <img src="images/envoyer-message.png" alt="Envoyer" class="send-icon">
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Update device info
+        function updateDeviceInfo() {
+            document.getElementById('viewport-width').textContent = window.innerWidth;
+            document.getElementById('viewport-height').textContent = window.innerHeight;
+            document.getElementById('pixel-ratio').textContent = window.devicePixelRatio;
+            
+            // Device type
+            let deviceType = 'Desktop';
+            if (window.innerWidth < 768) deviceType = 'Mobile';
+            else if (window.innerWidth < 1024) deviceType = 'Tablette';
+            document.getElementById('device-type').textContent = deviceType;
+            
+            // Orientation
+            const orientation = window.matchMedia("(orientation: portrait)").matches ? 'Portrait' : 'Paysage';
+            document.getElementById('orientation').textContent = orientation;
+            
+            // Touch support
+            const hasTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+            document.getElementById('touch-support').textContent = hasTouch ? 'Oui ✅' : 'Non ❌';
+        }
+        
+        // Toggle chatbot
+        document.querySelector('.loom-chatbot-header').addEventListener('click', function(e) {
+            if (!e.target.closest('.minimize-button')) {
+                document.querySelector('.loom-chatbot-container').classList.toggle('minimized');
+            }
+        });
+        
+        document.querySelector('.minimize-button').addEventListener('click', function(e) {
+            e.stopPropagation();
+            document.querySelector('.loom-chatbot-container').classList.toggle('minimized');
+        });
+        
+        // Update on load and resize
+        updateDeviceInfo();
+        window.addEventListener('resize', updateDeviceInfo);
+        window.addEventListener('orientationchange', updateDeviceInfo);
+        
+        // Simulate loading animation
+        let loadingDemo = false;
+        document.getElementById('loom-chatbot-send').addEventListener('click', function() {
+            if (!loadingDemo) {
+                document.querySelector('.loom-chatbot-loading').classList.add('active');
+                loadingDemo = true;
+                setTimeout(() => {
+                    document.querySelector('.loom-chatbot-loading').classList.remove('active');
+                    loadingDemo = false;
+                }, 2000);
+            }
+        });
+    </script>
+</body>
+</html>
