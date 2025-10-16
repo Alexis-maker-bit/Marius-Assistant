@@ -12,6 +12,20 @@
     box-sizing: border-box;
 }
 
+/* Performance optimization for mobile */
+.loom-chatbot-container,
+.loom-chatbot-header,
+.minimize-button,
+.product-card,
+#loom-chatbot-send,
+#loom-chatbot-photo-btn {
+    will-change: transform;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
 /* ===========================
    CHATBOT CONTAINER
    =========================== */
@@ -203,13 +217,19 @@
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     word-wrap: break-word;
     overflow-wrap: break-word;
+    word-break: break-word;
     line-height: 1.5;
     font-size: 15px;
     color: #1f2937;
+    /* Prevent long URLs from breaking layout */
+    overflow-wrap: anywhere;
+    hyphens: auto;
 }
 
 .bot-message p {
     margin: 0 0 8px 0;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .bot-message p:last-child {
@@ -229,6 +249,21 @@
 
 .bot-message li {
     margin: 4px 0;
+}
+
+.bot-message a {
+    color: #667eea;
+    text-decoration: underline;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.bot-message code {
+    background: #f3f4f6;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
 }
 
 /* User messages */
@@ -808,6 +843,38 @@
     border-width: 0;
 }
 
+/* Skip links for accessibility */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: #667eea;
+    color: white;
+    padding: 8px;
+    text-decoration: none;
+    z-index: 100;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
+/* High contrast mode improvements */
+@media (prefers-contrast: high) {
+    .loom-chatbot-container {
+        border: 2px solid currentColor;
+    }
+    
+    .bot-message,
+    .user-message {
+        border: 1px solid currentColor;
+    }
+    
+    .product-card-button.primary {
+        border: 2px solid currentColor;
+    }
+}
+
 /* ===========================
    PRINT STYLES
    =========================== */
@@ -815,5 +882,54 @@
 @media print {
     .loom-chatbot-container {
         display: none;
+    }
+}
+
+/* ===========================
+   NO JAVASCRIPT FALLBACK
+   =========================== */
+
+.no-js .loom-chatbot-container {
+    display: none;
+}
+
+.no-js .chatbot-fallback {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #667eea;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 8px;
+    max-width: 300px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 999999;
+}
+
+/* ===========================
+   LOADING STATES
+   =========================== */
+
+.loom-chatbot-container.loading {
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+/* Skeleton loading for messages */
+.skeleton-message {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s ease-in-out infinite;
+    border-radius: 8px;
+    height: 60px;
+    margin-bottom: 12px;
+}
+
+@keyframes skeleton-loading {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
     }
 }
