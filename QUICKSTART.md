@@ -232,12 +232,8 @@ Optimiser images/ avec:
 ## 🆘 Support
 
 ### Communauté
-- GitHub Issues pour bugs
-- GitHub Discussions pour questions
-
-### Commercial
-- Email: support@loomvision.com (si disponible)
-- Site web: https://loomvision.com (si disponible)
+- GitHub Issues pour bugs: [Marius-Assistant Issues](https://github.com/Alexis-maker-bit/Marius-Assistant/issues)
+- GitHub Discussions pour questions générales
 
 ## ⚡ Prêt à l'emploi!
 
